@@ -34,8 +34,42 @@
 /* ========== SIDEBAR ========== */
 
 /* Hide default page nav label */
-.stSidebar [data-testid="stSidebarNav"] { display: none !important; }
+/* Sidebar Navigation - Dark Theme */
+.stSidebar [data-testid="stSidebarNav"] {
+  background: transparent !important;
+  padding: 0.75rem 0.5rem !important;
+  margin-bottom: 1.25rem !important;
+  border-bottom: 1px solid rgba(184, 147, 91, 0.2) !important;
+}
 
+/* Nav links */
+.stSidebar [data-testid="stSidebarNav"] a {
+  color: rgba(255, 255, 255, 0.75) !important;
+  text-decoration: none !important;
+  font-size: 0.85rem !important;
+  font-weight: 500 !important;
+  padding: 0.5rem 0.75rem !important;
+  margin: 0.15rem 0 !important;
+  border-radius: 8px !important;
+  border-left: 3px solid transparent !important;
+  transition: all 0.2s ease !important;
+  display: block !important;
+}
+
+.stSidebar [data-testid="stSidebarNav"] a:hover {
+  background: rgba(255, 255, 255, 0.07) !important;
+  color: #D9BE8E !important;
+  border-left-color: #B8935B !important;
+  transform: translateX(3px);
+}
+
+/* Active page */
+.stSidebar [data-testid="stSidebarNav"] a[aria-current="page"] {
+  background: rgba(184, 147, 91, 0.15) !important;
+  color: #F0D9A8 !important;
+  font-weight: 600 !important;
+  border-left-color: #D9BE8E !important;
+}
 .stSidebar {
   background: linear-gradient(180deg, #070f1e 0%, #0d1f38 50%, #0a1628 100%) !important;
   border-right: 1px solid rgba(184, 147, 91, 0.3) !important;

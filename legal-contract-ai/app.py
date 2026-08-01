@@ -65,11 +65,7 @@ load_css()
 # Sidebar
 # ==========================
 with st.sidebar:
-    # Hide default Streamlit nav header
-    st.markdown(
-        '<style>[data-testid="stSidebarNav"] {display: none !important;}</style>',
-        unsafe_allow_html=True
-    )
+    
     
     # Brand
     st.markdown(
