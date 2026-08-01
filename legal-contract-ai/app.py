@@ -4,6 +4,9 @@ import matplotlib.pyplot as plt
 import random
 from datetime import datetime
 import os
+from database.database_service import init_db
+
+init_db()
 
 from services.database_service import (
     get_total_contracts,

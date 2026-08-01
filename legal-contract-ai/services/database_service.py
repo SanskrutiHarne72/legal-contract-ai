@@ -1,5 +1,7 @@
 import sqlite3
 import pandas as pd
+import os
+os.makedirs("database", exist_ok=True)
 DB_NAME = "database/contracts.db"
 
 def init_db():
