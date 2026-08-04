@@ -1,0 +1,12 @@
+﻿streamlit
+google-genai
+google-generativeai
+reportlab
+pymupdf
+pandas
+matplotlib
+pydantic
+python-dotenv
+certifi
+httpx
+pillow
