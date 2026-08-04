@@ -1,8 +1,6 @@
 import streamlit as st
 
-def load_css():
-    with open("assets/style.css", encoding="utf-8") as f:
-        st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+from utils.ui import load_css, page_header
 
 st.set_page_config(
     page_title="About · AI Legal Assistant",
@@ -13,15 +11,10 @@ st.set_page_config(
 load_css()
 
 # ===========================
-# Header Banner
-# ===========================
-st.markdown("""
-<div class="subpage-hero">
-    <h1>About AI Legal Contract Assistant</h1>
-    <p>An enterprise-grade, AI-assisted platform for drafting, reviewing, and evaluating commercial agreements with legal precision.</p>
-</div>
-""", unsafe_allow_html=True)
-
+page_header(
+    "ℹ️ About AI Legal Contract Assistant",
+    "An AI-powered platform for drafting, reviewing, analyzing, and managing legal contracts."
+)
 st.markdown("""
 <div class="section-head"><span class="tag">§ 01</span><h2>System Architecture & Overview</h2></div>
 """, unsafe_allow_html=True)

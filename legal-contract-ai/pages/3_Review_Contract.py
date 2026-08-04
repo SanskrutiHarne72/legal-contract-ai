@@ -1,10 +1,7 @@
 import streamlit as st
 from services.pdf_reader import extract_text_from_pdf
 from services.gemini_service import generate_contract
-
-def load_css():
-    with open("assets/style.css", encoding="utf-8") as f:
-        st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+from utils.ui import load_css, page_header
 
 st.set_page_config(
     page_title="Review Contract · AI Legal Assistant",
@@ -15,15 +12,10 @@ st.set_page_config(
 load_css()
 
 # ===========================
-# Header Banner
-# ===========================
-st.markdown("""
-<div class="subpage-hero">
-    <h1>Contract Review & Ingestion Workspace</h1>
-    <p>Upload existing legal agreements to analyze risk factors, detect missing protections, and receive plain-language summaries.</p>
-</div>
-""", unsafe_allow_html=True)
-
+page_header(
+    "📄 Contract Review Workspace",
+    "Upload agreements to analyze risks, detect missing clauses, and receive AI-powered summaries."
+)
 # ===========================
 # Ingestion Card
 # ===========================

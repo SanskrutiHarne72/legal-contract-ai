@@ -1,10 +1,6 @@
 import streamlit as st
 from services.gemini_service import generate_contract
-
-def load_css():
-    with open("assets/style.css", encoding="utf-8") as f:
-        st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
-
+from utils.ui import load_css, page_header
 st.set_page_config(
     page_title="Explain Clause · AI Legal Assistant",
     page_icon="⚖️",
@@ -13,15 +9,10 @@ st.set_page_config(
 
 load_css()
 
-# ===========================
-# Header Banner
-# ===========================
-st.markdown("""
-<div class="subpage-hero">
-    <h1>Clause Intelligence Lab</h1>
-    <p>Deconstruct dense legal jargon into clear explanations, risk callouts, and practical business implications.</p>
-</div>
-""", unsafe_allow_html=True)
+page_header(
+    "📖 Clause Intelligence Lab",
+    "Deconstruct legal jargon into simple explanations, risk analysis, and business insights."
+)
 
 # Preset clauses dictionary for quick testing
 PRESETS = {

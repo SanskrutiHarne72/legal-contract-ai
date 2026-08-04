@@ -1,14 +1,15 @@
 import streamlit as st
 from datetime import datetime, date
+
 from services.gemini_service import generate_contract
 from services.pdf_generator import create_pdf
 from services.database_service import init_db, save_contract
 
+from utils.ui import load_css, page_header
+
 init_db()
 
-def load_css():
-    with open("assets/style.css", encoding="utf-8") as f:
-        st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+
 
 st.set_page_config(
     page_title="Draft Contract · AI Legal Assistant",
@@ -18,16 +19,10 @@ st.set_page_config(
 
 load_css()
 
-# ===========================
-# Header Banner
-# ===========================
-st.markdown("""
-<div class="subpage-hero">
-    <h1>Contract Drafting Workspace</h1>
-    <p>Build legally rigorous, customized agreements in minutes with guided clause selection and Gemini AI logic.</p>
-</div>
-""", unsafe_allow_html=True)
-
+page_header(
+    "📝 Contract Drafting Workspace",
+    "Build legally rigorous, customized agreements in minutes with guided clause selection and Gemini AI."
+)
 # ===========================
 # Step 1: Basic Information
 # ===========================

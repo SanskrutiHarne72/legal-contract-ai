@@ -1,8 +1,6 @@
 import streamlit as st
+from utils.ui import load_css, page_header
 
-def load_css():
-    with open("assets/style.css", encoding="utf-8") as f:
-        st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
 st.set_page_config(
     page_title="Settings · AI Legal Assistant",
@@ -11,16 +9,10 @@ st.set_page_config(
 )
 
 load_css()
-
-# ===========================
-# Header Banner
-# ===========================
-st.markdown("""
-<div class="subpage-hero">
-    <h1>Platform Configuration & Settings</h1>
-    <p>Manage model credentials, default legal jurisdiction rules, and workspace preferences.</p>
-</div>
-""", unsafe_allow_html=True)
+page_header(
+    "⚙️ Platform Configuration & Settings",
+    "Manage AI model configuration, default legal jurisdictions, and workspace preferences."
+)
 
 st.markdown("""
 <div class="section-head"><span class="tag">§ 01</span><h2>AI Model & Engine Configuration</h2></div>

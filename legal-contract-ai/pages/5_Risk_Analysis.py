@@ -1,10 +1,7 @@
 import streamlit as st
 from services.pdf_reader import extract_text_from_pdf
 from services.gemini_service import generate_contract
-
-def load_css():
-    with open("assets/style.css", encoding="utf-8") as f:
-        st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+from utils.ui import load_css, page_header
 
 st.set_page_config(
     page_title="Risk Analysis · AI Legal Assistant",
@@ -13,16 +10,11 @@ st.set_page_config(
 )
 
 load_css()
+page_header(
+    "Page Title",
+    "Page description"
+)
 
-# ===========================
-# Header Banner
-# ===========================
-st.markdown("""
-<div class="subpage-hero">
-    <h1>Contract Risk Matrix & Audit</h1>
-    <p>Automated threat detection for contracts — flag high-risk liabilities, unfair indemnities, and critical missing provisions.</p>
-</div>
-""", unsafe_allow_html=True)
 
 # Risk gauge summary indicators
 r1, r2, r3 = st.columns(3)

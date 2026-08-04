@@ -1,26 +1,16 @@
 import streamlit as st
 from services.database_service import get_total_contracts, get_recent_contracts, get_contract_type_data
+from utils.ui import load_css, page_header
 
-def load_css():
-    with open("assets/style.css", encoding="utf-8") as f:
-        st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
-
-st.set_page_config(
-    page_title="Executive Dashboard · AI Legal Assistant with explanation",
-    page_icon="⚖️",
-    layout="wide"
-)
 
 load_css()
+page_header(
+    "📊 Legal Workspace Dashboard",
+    "Real-time analytics, repository status, and quick access to every legal tool."
+)
 
 total_contracts = get_total_contracts()
 
-st.markdown("""
-<div class="subpage-hero">
-    <h1>Legal Workspace Dashboard</h1>
-    <p>Real-time analytics, repository status, and quick entry points across your legal workspace.</p>
-</div>
-""", unsafe_allow_html=True)
 
 m1, m2, m3, m4 = st.columns(4)
 

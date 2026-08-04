@@ -5,7 +5,15 @@ from google import genai
 
 load_dotenv()
 
-api_key = st.secrets.get("GEMINI_API_KEY") or os.getenv("GEMINI_API_KEY")
+# Try local .env first
+api_key = os.getenv("GEMINI_API_KEY")
+
+# If not found, try Streamlit Cloud secrets
+if not api_key:
+    try:
+        api_key = st.secrets["GEMINI_API_KEY"]
+    except Exception:
+        pass
 
 if not api_key:
     raise ValueError("GEMINI_API_KEY is missing.")

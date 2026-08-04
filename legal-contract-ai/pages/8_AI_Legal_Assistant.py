@@ -1,36 +1,22 @@
 import streamlit as st
 from services.gemini_service import generate_contract
-
-from pathlib import Path
-
-def load_css():
-    css_path = Path(__file__).resolve().parent.parent / "assets" / "style.css"
-
-    if css_path.exists():
-        with open(css_path, "r", encoding="utf-8") as f:
-            st.markdown(
-                f"<style>{f.read()}</style>",
-                unsafe_allow_html=True
-            )
-    else:
-        st.error(f"CSS file not found: {css_path}")
+from utils.ui import load_css, page_header
 st.set_page_config(
-    page_title="Legal Assistant · AI Legal Assistant",
+    page_title="AI Legal Assistant",
     page_icon="⚖️",
     layout="wide"
 )
+
 
 load_css()
 
 # ===========================
 # Header Banner
 # ===========================
-st.markdown("""
-<div class="subpage-hero">
-    <h1>Legal Counsel AI Workspace</h1>
-    <p>Conversational AI trained for legal inquiries — ask questions about contract law, clause interpretation, or negotiation tactics.</p>
-</div>
-""", unsafe_allow_html=True)
+page_header(
+    "⚖ Legal Counsel AI",
+    "Conversational AI trained for legal questions and contract analysis."
+)
 
 # Initialize chat history
 if "messages" not in st.session_state:

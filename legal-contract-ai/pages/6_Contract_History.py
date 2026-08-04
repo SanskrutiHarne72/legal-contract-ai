@@ -1,10 +1,7 @@
 import streamlit as st
 from services.database_service import get_contracts, delete_contract
 from services.pdf_generator import create_pdf
-
-def load_css():
-    with open("assets/style.css", encoding="utf-8") as f:
-        st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+from utils.ui import load_css, page_header
 
 st.set_page_config(
     page_title="Contract Repository · AI Legal Assistant",
@@ -14,16 +11,10 @@ st.set_page_config(
 
 load_css()
 
-# ===========================
-# Header Banner
-# ===========================
-st.markdown("""
-<div class="subpage-hero">
-    <h1>Legal Document Repository</h1>
-    <p>Search, inspect, export, or manage all generated legal contracts stored securely in local SQLite database.</p>
-</div>
-""", unsafe_allow_html=True)
-
+page_header(
+    "📜 Legal Document Repository",
+    "Search, inspect, export, and manage all generated legal contracts stored in your database."
+)
 contracts = get_contracts()
 
 if not contracts:
