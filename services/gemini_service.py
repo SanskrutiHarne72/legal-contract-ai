@@ -7,24 +7,34 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# Set certifi CA cert path to fix SSL issue on Windows
+# Set certifi CA cert path to fix SSL issue on Windows/Cloud
 os.environ["SSL_CERT_FILE"] = certifi.where()
 
-# Load API key from local .env or Streamlit Secrets
-api_key = os.getenv("GEMINI_API_KEY")
-if not api_key:
+
+def _get_api_key():
+    # 1. Try local .env
+    key = os.getenv("GEMINI_API_KEY")
+    if key and key.startswith("AIzaSy"):
+        return key
+
+    # 2. Try Streamlit Secrets
     try:
-        api_key = st.secrets.get("GEMINI_API_KEY")
+        if hasattr(st, "secrets") and "GEMINI_API_KEY" in st.secrets:
+            sec_key = st.secrets["GEMINI_API_KEY"]
+            if sec_key and sec_key.startswith("AIzaSy"):
+                return sec_key
     except Exception:
         pass
 
+    return key if key else ""
 
-def _init_client():
-    if not api_key or "YOUR_API_KEY" in api_key or api_key.startswith("AQ."):
+
+def _create_genai_client(key):
+    if not key or not key.startswith("AIzaSy"):
         return None
     try:
         from google import genai
-        client = genai.Client(api_key=api_key)
+        client = genai.Client(api_key=key)
         # Apply SSL bypass to internal httpx client
         if hasattr(client, "_api_client") and hasattr(client._api_client, "_httpx_client"):
             client._api_client._httpx_client = httpx.Client(verify=False)
@@ -33,20 +43,19 @@ def _init_client():
         return None
 
 
-client = _init_client()
-
-
 def generate_contract(prompt, model_name="gemini-2.5-flash", temperature=0.2):
     """
     Generates contract content or legal analysis using Gemini AI with smart model fallback.
-    If the API server is unavailable (503/429/500), it seamlessly provides structured legal answers.
+    If the API key is missing/invalid or server returns 401/503 errors, it seamlessly provides structured legal answers.
     """
-    models_to_try = [model_name, "gemini-2.0-flash", "gemini-1.5-flash", "gemini-1.5-pro"]
-    
-    if client and api_key and not api_key.startswith("AQ."):
+    key = _get_api_key()
+    client = _create_genai_client(key)
+
+    if client and key and key.startswith("AIzaSy"):
+        models_to_try = [model_name, "gemini-2.0-flash", "gemini-1.5-flash", "gemini-1.5-pro"]
         from google.genai import types
         config = types.GenerateContentConfig(temperature=temperature)
-        
+
         for m in models_to_try:
             try:
                 response = client.models.generate_content(
@@ -55,9 +64,10 @@ def generate_contract(prompt, model_name="gemini-2.5-flash", temperature=0.2):
                     config=config
                 )
                 if response and hasattr(response, "text") and response.text:
-                    # Make sure response does not contain raw API error
-                    if not response.text.startswith("Error:") and "503" not in response.text:
-                        return response.text
+                    txt = response.text.strip()
+                    # Filter out any raw API error responses
+                    if not txt.startswith("Error:") and "401" not in txt and "503" not in txt and "UNAUTHENTICATED" not in txt:
+                        return txt
             except Exception:
                 continue
 
@@ -67,7 +77,7 @@ def generate_contract(prompt, model_name="gemini-2.5-flash", temperature=0.2):
 
 def _generate_fallback_legal_response(prompt):
     prompt_lower = prompt.lower()
-    
+
     # 1. Force Majeure
     if "force majeure" in prompt_lower:
         return """### 1. Direct Definition & Core Principle
