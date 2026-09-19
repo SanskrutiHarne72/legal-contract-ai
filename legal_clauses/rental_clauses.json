@@ -1,0 +1,17 @@
+{
+    "pets": {
+        "title": "Pet Policy",
+        "description": "Standard clause detailing pet permissions, restrictions, and additional deposits.",
+        "text": "The Tenant may keep pets on the Premises only with the prior written consent of the Landlord. Any permitted pets must not cause a nuisance to neighbors or damage to the property. The Tenant shall be strictly liable for any damage caused by the pet, and an additional pet deposit may be required."
+    },
+    "subletting": {
+        "title": "Subletting and Assignment",
+        "description": "Standard clause restricting subletting.",
+        "text": "The Tenant shall not assign this Agreement, or sublet or grant any license to use the Premises or any part thereof without the prior written consent of the Landlord. Any attempted assignment or subletting without such consent shall be void and shall constitute a material breach of this Agreement."
+    },
+    "maintenance": {
+        "title": "Maintenance and Repair",
+        "description": "Outlines responsibilities for property maintenance.",
+        "text": "The Tenant shall maintain the Premises in a clean and sanitary condition and shall promptly notify the Landlord of any damage or required repairs. The Landlord shall be responsible for all structural repairs and major maintenance not caused by the Tenant's negligence."
+    }
+}

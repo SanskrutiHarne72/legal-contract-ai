@@ -13,15 +13,17 @@ from services.database_service import (
     get_total_contracts,
     get_recent_contracts,
     get_contract_type_data,
-    get_contract_date_data
+    get_contract_date_data,
+    get_history_stats,
+    get_recent_history,
 )
 
 # ---------- Theme colors ----------
-INK = "#1B4368"
-GOLD = "#B8935B"
-GOLD_LIGHT = "#D9BE8E"
-MUTED = "#5D6B7A"
-CREAM = "#FAF8F5"
+INK = "#D4A853"
+GOLD = "#D4A853"
+GOLD_LIGHT = "#E5BE72"
+MUTED = "#CBD5E1"
+CREAM = "#172033"
 
 # ---------- SVG Icons ----------
 ICON_DRAFT = """<svg viewBox="0 0 24 24" fill="none" stroke="#B8935B" stroke-width="1.6"><path d="M6 2h9l5 5v15H6z"/><path d="M15 2v6h6"/><path d="M9 13h6M9 17h6"/></svg>"""
@@ -90,7 +92,7 @@ with st.sidebar:
     # Status
     st.markdown(
         '<div style="text-align:center; margin-bottom:1.25rem;">'
-        '<span class="status-pill"><span class="dot"></span> Gemini Online</span>'
+        '<span class="status-pill"><span class="dot"></span> Local ML Online</span>'
         '</div>',
         unsafe_allow_html=True
     )
@@ -170,7 +172,7 @@ with hero_col1:
         <div class="eyebrow">🎓 Final Year Capstone Project · {greeting}</div>
         <h1>AI Legal Contract Assistant</h1>
         <p class="lede">
-            An enterprise-grade legal technology platform powered by Google Gemini AI. 
+            An enterprise-grade legal technology platform powered by trained local ML models. 
             Draft legal agreements, perform automated risk audits, detect missing protective clauses, 
             and transform complex legalese into plain language.
         </p>
@@ -184,7 +186,7 @@ with hero_col1:
                 <div class="label">Local Privacy</div>
             </div>
             <div class="hero-stat">
-                <div class="num">Gemini 1.5</div>
+                <div class="num">Local ML</div>
                 <div class="label">Reasoning Engine</div>
             </div>
             <div class="hero-stat">
@@ -207,7 +209,7 @@ st.markdown("""
     <span class="label">Technology Stack</span>
     <span class="tech-badge">Python 3.14</span>
     <span class="tech-badge">Streamlit UI</span>
-    <span class="tech-badge">Google Gemini AI</span>
+    <span class="tech-badge">Local ML Pipeline</span>
     <span class="tech-badge">PyMuPDF</span>
     <span class="tech-badge">ReportLab PDF</span>
     <span class="tech-badge">SQLite Database</span>
@@ -229,7 +231,7 @@ with c1:
     <div class="action-card">
         {icon_badge(ICON_DRAFT)}
         <h3>Draft Contract</h3>
-        <p>Assemble custom agreements with guided clause selection and Gemini AI generation.</p>
+        <p>Assemble custom agreements with guided clause selection and local template engine generation.</p>
     </div>
     """, unsafe_allow_html=True)
     if st.button("Launch Drafting →", use_container_width=True, key="btn_draft"):
@@ -293,7 +295,7 @@ with s2:
     st.markdown("""
     <div class="step-card">
         <div class="step-circle">02</div>
-        <h3>Gemini Cognitive Audit</h3>
+        <h3>Local Cognitive Audit</h3>
         <p>Clauses are cross-referenced against legal standards, risk scored, and classified for unfair liabilities.</p>
     </div>
     """, unsafe_allow_html=True)
@@ -350,22 +352,30 @@ st.markdown("<br>", unsafe_allow_html=True)
 # Recent Activity
 # ===========================
 st.markdown("""
-<div class="section-head"><span class="tag">§ 04</span><h2>Recent Repository Activity</h2></div>
+<div class="section-head"><span class="tag">§ 04</span><h2>Recent Activity</h2></div>
 """, unsafe_allow_html=True)
 
-if recent_contracts:
-    for title, contract_type, created_date in recent_contracts:
+_AICONS = {"Drafted": "📝", "Reviewed": "🔍", "Clause Explained": "💡", "Risk Analyzed": "⚠️"}
+
+try:
+    _recent_history = get_recent_history(5)
+except Exception:
+    _recent_history = []
+
+if _recent_history:
+    for _name, _ctype, _activity, _created_at, _status in _recent_history:
+        _icon = _AICONS.get(_activity, "📄")
         st.markdown(f"""
         <div class="ledger-row">
             <div>
-                <h4 style="margin:0;">{title}</h4>
-                <span style="font-size:0.8rem; color:#5D6B7A;">{created_date}</span>
+                <h4 style="margin:0;">{_icon} {_name}</h4>
+                <span style="font-size:0.8rem; color:#5D6B7A;">{_activity} · {_ctype} · {_created_at}</span>
             </div>
-            <span class="tech-badge">{contract_type}</span>
+            <span class="tech-badge">{_status}</span>
         </div>
         """, unsafe_allow_html=True)
 else:
-    st.info("No contracts saved in database yet — draft or upload your first agreement above.")
+    st.info("No contract activity yet — draft or review your first agreement above.")
 
 st.markdown("<br>", unsafe_allow_html=True)
 
@@ -404,13 +414,14 @@ with left_chart:
     st.markdown('<div class="chart-card"><div class="chart-title">Contracts by Type</div>', unsafe_allow_html=True)
     if not df.empty:
         fig, ax = plt.subplots(figsize=(6, 3.8))
-        ax.bar(df["contract_type"], df["total"], color=INK, width=0.55)
-        ax.set_ylabel("Total", color=MUTED, fontsize=9)
-        ax.tick_params(colors=MUTED, labelsize=9)
+        fig.patch.set_facecolor('#172033')
+        ax.set_facecolor('#172033')
+        ax.bar(df["contract_type"], df["total"], color='#D4A853', width=0.55)
+        ax.set_ylabel("Total", color='#CBD5E1', fontsize=9)
+        ax.tick_params(colors='#CBD5E1', labelsize=9)
         ax.spines[["top", "right"]].set_visible(False)
-        ax.spines[["left", "bottom"]].set_color(MUTED)
-        fig.patch.set_alpha(0)
-        plt.xticks(rotation=20, ha='right')
+        ax.spines[["left", "bottom"]].set_color('#334155')
+        plt.xticks(rotation=20, ha='right', color='#CBD5E1')
         st.pyplot(fig)
     else:
         st.info("No contract classification data available.")
@@ -433,18 +444,19 @@ with right_chart:
         )
 
         fig, ax = plt.subplots(figsize=(6, 3.8))
+        fig.patch.set_facecolor('#172033')
+        ax.set_facecolor('#172033')
         ax.plot(
             counts["created_date"],
             counts["count"],
             marker="o",
-            color=GOLD,
+            color='#D4A853',
             linewidth=2.5
         )
-        ax.tick_params(colors=MUTED, labelsize=9)
+        ax.tick_params(colors='#CBD5E1', labelsize=9)
         ax.spines[["top", "right"]].set_visible(False)
-        ax.spines[["left", "bottom"]].set_color(MUTED)
-        fig.patch.set_alpha(0)
-        plt.xticks(rotation=25, ha='right')
+        ax.spines[["left", "bottom"]].set_color('#334155')
+        plt.xticks(rotation=25, ha='right', color='#CBD5E1')
         st.pyplot(fig)
     else:
         st.info("No timeline data available.")
@@ -473,7 +485,7 @@ st.markdown("""
         </div>
         <div class="footer-col">
             <h5>Technologies</h5>
-            <p>Streamlit · Google Gemini AI<br>PyMuPDF · ReportLab<br>Pydantic · SQLite</p>
+            <p>Streamlit · Local ML Engine<br>PyMuPDF · ReportLab<br>Pydantic · SQLite</p>
         </div>
     </div>
     <div class="bottom-line">

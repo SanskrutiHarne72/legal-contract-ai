@@ -29,7 +29,7 @@ if "settings_language" not in st.session_state:
     st.session_state["settings_language"] = "Hindi"
 
 if "settings_model" not in st.session_state:
-    st.session_state["settings_model"] = "Google Gemini 2.5 Flash (Recommended)"
+    st.session_state["settings_model"] = "Local LegalML Engine (Trained Offline)"
 
 if "settings_temp" not in st.session_state:
     st.session_state["settings_temp"] = 0.2
@@ -47,9 +47,8 @@ with st.container():
 
     with c1:
         model_options = [
-            "Google Gemini 2.5 Flash (Recommended)",
-            "Google Gemini 2.0 Flash",
-            "Google Gemini 1.5 Pro"
+            "Local LegalML Engine (Trained Offline)",
+            "Rule-Based Risk Engine Only"
         ]
         default_model_idx = model_options.index(st.session_state["settings_model"]) if st.session_state["settings_model"] in model_options else 0
         selected_model = st.selectbox("Active AI Reasoning Model", model_options, index=default_model_idx)
@@ -64,8 +63,8 @@ with st.container():
         )
 
     with c2:
-        st.markdown('<div class="status-pill" style="margin-top:28px;"><span class="dot"></span> Gemini Engine Connected</div>', unsafe_allow_html=True)
-        st.markdown("<p style='font-size:13px; color:var(--text-muted); margin-top:10px;'>Loaded securely via local environment & SSL verification bypass.</p>", unsafe_allow_html=True)
+        st.markdown('<div class="status-pill" style="margin-top:28px;"><span class="dot"></span> Local ML Engine Active</div>', unsafe_allow_html=True)
+        st.markdown("<p style='font-size:13px; color:var(--text-muted); margin-top:10px;'>Loaded securely from local disk (No external API calls required).</p>", unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
 
 # ===========================

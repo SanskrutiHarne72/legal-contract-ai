@@ -1,0 +1,36 @@
+{
+    "India": {
+        "Maharashtra": {
+            "rental": [
+                {
+                    "act": "Maharashtra Rent Control Act, 1999",
+                    "description": "Governs the rental of properties in Maharashtra, establishing fair rent, protecting tenants from arbitrary eviction, and outlining landlord responsibilities."
+                },
+                {
+                    "act": "Registration Act, 1908",
+                    "description": "Requires mandatory registration of rent agreements exceeding 11 months."
+                }
+            ],
+            "employment": [
+                {
+                    "act": "Maharashtra Shops and Establishments Act, 2017",
+                    "description": "Regulates conditions of work and employment in shops and commercial establishments."
+                }
+            ]
+        },
+        "default": {
+            "rental": [
+                {
+                    "act": "Transfer of Property Act, 1882",
+                    "description": "Central act governing the lease and transfer of immovable property in India."
+                }
+            ],
+            "employment": [
+                {
+                    "act": "Industrial Disputes Act, 1947",
+                    "description": "Governs industrial disputes, layoffs, and retrenchment of workers."
+                }
+            ]
+        }
+    }
+}

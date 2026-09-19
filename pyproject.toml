@@ -1,12 +1,10 @@
 [project]
 name = "legal-contract-ai"
 version = "0.1.0"
-description = "Add your description here"
+description = "AI Legal Assistant using offline ML pipeline"
 readme = "README.md"
 requires-python = ">=3.14"
 dependencies = [
-    "google-genai>=2.14.0",
-    "google-generativeai>=0.8.6",
     "matplotlib>=3.11.1",
     "pandas>=3.0.3",
     "pydantic>=2.13.4",

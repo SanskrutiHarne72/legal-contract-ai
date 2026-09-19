@@ -26,7 +26,7 @@ with col1:
     st.markdown("""
     <div class="glass-card">
         <h3>🎯 Project Mission</h3>
-        <p>The AI Legal Contract Assistant bridges the gap between complex legal drafting and modern software automation. Powered by Google Gemini AI, it helps founders, legal operations teams, and individuals draft tailored contracts, analyze liabilities, and understand dense legal provisions in seconds.</p>
+        <p>The AI Legal Contract Assistant bridges the gap between complex legal drafting and modern software automation. Powered by trained local ML models, it helps founders, legal operations teams, and individuals draft tailored contracts, analyze liabilities, and understand dense legal provisions in seconds.</p>
     </div>
     """, unsafe_allow_html=True)
 
@@ -51,7 +51,7 @@ t1, t2, t3, t4, t5, t6 = st.columns(6)
 with t1:
     st.markdown('<div class="card"><h2>Streamlit</h2><p>Frontend Framework</p></div>', unsafe_allow_html=True)
 with t2:
-    st.markdown('<div class="card"><h2>Gemini AI</h2><p>Reasoning Engine</p></div>', unsafe_allow_html=True)
+    st.markdown('<div class="card"><h2>Local ML</h2><p>Reasoning Engine</p></div>', unsafe_allow_html=True)
 with t3:
     st.markdown('<div class="card"><h2>PyMuPDF</h2><p>PDF Text Parser</p></div>', unsafe_allow_html=True)
 with t4:
