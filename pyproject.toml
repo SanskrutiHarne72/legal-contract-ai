@@ -5,6 +5,7 @@ description = "AI Legal Assistant using offline ML pipeline"
 readme = "README.md"
 requires-python = ">=3.14"
 dependencies = [
+    # Core UI & document handling
     "matplotlib>=3.11.1",
     "pandas>=3.0.3",
     "pydantic>=2.13.4",
@@ -12,4 +13,13 @@ dependencies = [
     "python-dotenv>=1.2.2",
     "reportlab>=5.0.0",
     "streamlit>=1.59.2",
+    # Local ML pipeline (offline — no external API)
+    "joblib>=1.4.2",
+    "scikit-learn==1.9.0",
+    "scipy>=1.14.0",
+    "numpy>=2.1.0",
+    "sklearn-crfsuite>=0.3.6",
+    "rank-bm25>=0.2.2",
+    "beautifulsoup4>=4.12.3",
+    "lxml>=5.3.0",
 ]
